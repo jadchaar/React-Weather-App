@@ -1,0 +1,24 @@
+{
+  "name": "react-weather-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "stylelint-config-sass-guidelines": "^3.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-beta",
+    "history": "^4.6.3",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.12.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router": "^4.1.2",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
