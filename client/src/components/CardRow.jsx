@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: 0 */
-
 import React from 'react';
 import {
   Card,
@@ -12,7 +10,7 @@ import {
   CardBlock
 } from 'reactstrap';
 
-const CardRow = (props) => {
+const CardRow = () => {
   return (
     <CardGroup>
       <Card>

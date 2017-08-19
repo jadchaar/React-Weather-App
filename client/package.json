@@ -2,6 +2,7 @@
   "name": "react-weather-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "devDependencies": {
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.0.2",
@@ -24,7 +25,8 @@
     "build-css": "node-sass --include-path ./src --include-path ./node_modules src/containers/styles -o src/containers/styles --output-style compressed --source-map true --source-map-contents true",
     "watch-css": "npm run build-css && node-sass --include-path ./src --include-path ./node_modules src/containers/styles -o src/containers/styles --output-style compressed --source-map true --source-map-contents true --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "NODE_PATH=src npm-run-all -p watch-css start-js",
+    "start": "NODE_PATH=src npm-run-all -p watch-css start-js start-api-server",
+    "start-api-server": "cd .. && cd server && npm start",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
