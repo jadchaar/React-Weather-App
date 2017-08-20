@@ -7,12 +7,31 @@ import Nav from 'components/Nav';
 import Search from 'components/Search';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lat: '',
+      lon: ''
+    };
+
+    this.handleLatLon = this.handleLatLon.bind(this);
+  }
+
+  // Good article on sharing states between components https://goo.gl/CrudXt
+  handleLatLon(_lat, _lon) {
+    this.setState({
+      lat: _lat,
+      lon: _lon
+    });
+  }
+
   render() {
     return (
       <div>
         <Nav />
         {/*<Card />*/}
-        <Search />
+        <Search onLatLon={this.handleLatLon} />
       </div>
     );
   }
