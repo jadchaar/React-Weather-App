@@ -14,10 +14,11 @@ app.get('/api/react-weather', (req, res) => {
   // Obtain location search from query string
   getLatLon(req.query.location)
     .then(resolve => resolve.length ? res.json(resolve) : res.send('No results'))
-    .catch(err => res.status(500).send('An error has occured: ' + err));
+    .catch(err => res.status(500).send(`An error has occured: ${err}`));
 });
 
-app.listen(listenPort, () => console.log('react-weather-app server listening on port %s!', listenPort));
+// app.listen(listenPort, () => console.log('react-weather-app server listening on port %s!', listenPort));
+app.listen(listenPort, () => console.log(`react-weather-app server listening on port ${listenPort}!`));
 
 // Takes a location input and returns a json of location info
 const getLatLon = location => {

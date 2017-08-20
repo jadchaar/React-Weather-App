@@ -3,14 +3,16 @@ import React, {
 } from 'react';
 import 'containers/styles/App.css';
 import Nav from 'components/Nav';
-import Card from 'components/CardRow';
+// import Card from 'components/CardRow';
+import Search from 'components/Search';
 
 class App extends Component {
   render() {
     return (
       <div>
         <Nav />
-        <Card />
+        {/*<Card />*/}
+        <Search />
       </div>
     );
   }
