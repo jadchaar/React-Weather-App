@@ -10,7 +10,9 @@ import {
 import FontAwesome from 'react-fontawesome';
 import querystring from 'querystring';
 import PropTypes from 'prop-types';
-
+import {
+  checkResponseStatus
+} from '../utils/helpers';
 
 class Search extends Component {
   constructor(props) {
@@ -31,13 +33,10 @@ class Search extends Component {
   }
 
   searchLocation(query) {
-    return fetch(`/api/react-weather?${query}`, {
-        method: 'GET',
-        mode: 'cors',
-        accept: 'application/json'
+    return fetch(`/api/react-weather/coordinates?${query}`, {
+        mode: 'cors'
       })
       .then(checkResponseStatus)
-      // .then(parseResponse)
       .catch(err => console.error(`There has been a problem with the fetch operation: ${err.message}`));
   }
 
@@ -56,7 +55,7 @@ class Search extends Component {
     const qs = this.inputToQueryString(locationSearch);
     this.searchLocation(qs)
       .then(res => this.props.onLatLon(res.lat, res.lon))
-      .catch(err => console.error(`An error has occured: ${err.message}`));
+      .catch(err => console.error(`An error has occured. ${err.message}`));
   }
 
   render() {
@@ -79,15 +78,9 @@ Search.propTypes = {
   onLatLon: PropTypes.func.isRequired
 };
 
-const checkResponseStatus = res => {
-  if (res.ok) return res.json();
-  throw new Error(`Network response was not ok: ${res.statusText} (${res.status})`);
-};
-
-// const parseResponse = result => {
-//   const latlon = result;
-//   console.log(latlon.lat, latlon.lon);
-//   // return res
+// const checkResponseStatus = res => {
+//   if (res.ok) return res.json();
+//   throw new Error(`Network response was not ok: ${res.statusText} (${res.status})`);
 // };
 
 export default Search;
