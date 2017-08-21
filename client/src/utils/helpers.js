@@ -18,9 +18,22 @@ export const getWeatherData = (_lat, _lon) => {
     .catch(err => console.error(`There has been a problem with the fetch operation: ${err.message}`));
 };
 
-export const filterBasicCurrentWeatherData = data => {
-  return JSON.stringify(_.pick(data, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure']));
+export const getBasicCurrentWeatherData = (_lat, _lon) => {
+  const qs = generateQueryString({
+    lat: _lat,
+    lon: _lon
+  });
+  return fetch(`/api/react-weather/weather?${qs}`, {
+      mode: 'cors'
+    })
+    .then(checkResponseStatus)
+    .then(res => JSON.stringify(_.pick(res.currently, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure'])))
+    .catch(err => console.error(`There has been a problem with the fetch operation: ${err.message}`));
 };
+
+// export const getBasicCurrentWeatherData = data => {
+//   return JSON.stringify(_.pick(data, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure']));
+// };
 
 export const generateQueryString = obj => {
   return querystring.stringify(obj);
