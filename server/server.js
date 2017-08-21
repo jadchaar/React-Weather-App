@@ -6,6 +6,9 @@ const express = require('express');
 const urljoin = require('url-join');
 const app = express();
 const fetch = require('node-fetch');
+const {
+  checkResponseStatus
+} = require('./helpers');
 
 // Get port for server from arguments
 const listenPort = process.argv[2] ? parseInt(process.argv[2], 10) : 3001;
@@ -24,11 +27,6 @@ app.get('/api/react-weather/coordinates', (req, res) => {
     })
     .catch(err => res.status(500).send(`An error has occured: ${err}`));
 });
-
-const checkResponseStatus = res => {
-  if (res.ok) return res.json();
-  throw new Error(`Network response was not ok: ${res.statusText} (${res.status})`);
-};
 
 app.get('/api/react-weather/weather', (req, res) => {
   const {

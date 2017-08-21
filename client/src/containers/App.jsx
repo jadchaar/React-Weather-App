@@ -1,10 +1,15 @@
 import React, {
   Component
 } from 'react';
-import 'containers/styles/App.css';
 import Nav from 'components/Nav';
-// import Card from 'components/CardRow';
+import Basic from 'components/BasicInfoBar';
 import Search from 'components/Search';
+import Footer from 'components/Footer';
+import {
+  Container,
+  Row,
+  Col
+} from 'reactstrap';
 
 class App extends Component {
   constructor(props) {
@@ -27,11 +32,23 @@ class App extends Component {
   }
 
   render() {
+    const {
+      lat,
+      lon
+    } = this.state;
+    const latLonArr = [lat, lon];
     return (
       <div>
-        <Nav />
-        {/*<Card />*/}
-        <Search onLatLon={this.handleLatLon} />
+        <Container>
+          <Nav />
+          <Row>
+            <Col>
+              <Search onLatLon={this.handleLatLon} />
+            </Col>
+          </Row>
+          <Basic latlon={latLonArr} />
+          <Footer />
+        </Container>
       </div>
     );
   }

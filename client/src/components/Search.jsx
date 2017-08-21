@@ -5,13 +5,15 @@ import {
   InputGroup,
   InputGroupButton,
   Input,
-  Button
+  Button,
+  Form,
+  FormGroup
 } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
-import querystring from 'querystring';
 import PropTypes from 'prop-types';
 import {
-  checkResponseStatus
+  checkResponseStatus,
+  generateQueryString
 } from '../utils/helpers';
 
 class Search extends Component {
@@ -24,12 +26,6 @@ class Search extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  inputToQueryString(input) {
-    return querystring.stringify({
-      location: input
-    });
   }
 
   searchLocation(query) {
@@ -52,7 +48,9 @@ class Search extends Component {
     if (!locationSearch) {
       return; // TODO: CHANGE CLASS AND ALERT USER THAT FIELD IS BLANK
     }
-    const qs = this.inputToQueryString(locationSearch);
+    const qs = generateQueryString({
+      location: locationSearch
+    });
     this.searchLocation(qs)
       .then(res => this.props.onLatLon(res.lat, res.lon))
       .catch(err => console.error(`An error has occured. ${err.message}`));
@@ -60,16 +58,18 @@ class Search extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <InputGroup>
-          <Input type="text" placeholder="Search for a location" value={this.state.value} onChange={this.handleChange} />
-          <InputGroupButton>
-            <Button color="primary" type="submit" value="Submit">
-              <FontAwesome name='search' />
-            </Button>
-          </InputGroupButton>
-        </InputGroup>
-      </form>
+      <Form onSubmit={this.handleSubmit}>
+        <FormGroup>
+          <InputGroup>
+            <Input type="text" placeholder="Search for a location" value={this.state.value} onChange={this.handleChange} />
+            <InputGroupButton>
+              <Button color="primary" type="submit" value="Submit">
+                <FontAwesome name='search' />
+              </Button>
+            </InputGroupButton>
+          </InputGroup>
+        </FormGroup>
+      </Form>
     );
   }
 }
@@ -77,10 +77,5 @@ class Search extends Component {
 Search.propTypes = {
   onLatLon: PropTypes.func.isRequired
 };
-
-// const checkResponseStatus = res => {
-//   if (res.ok) return res.json();
-//   throw new Error(`Network response was not ok: ${res.statusText} (${res.status})`);
-// };
 
 export default Search;
