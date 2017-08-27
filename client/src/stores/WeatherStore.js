@@ -13,15 +13,6 @@ class WeatherStore extends EventEmitter {
   constructor(props) {
     super(props);
 
-    // this.weather = {
-    //   'windSpeed': null,
-    //   'humidity': null,
-    //   'dewPoint': null,
-    //   'uvIndex': null,
-    //   'visibility': null,
-    //   'pressure': null
-    // };
-
     this.weather = {
       summary: null,
       icon: null,
@@ -33,14 +24,13 @@ class WeatherStore extends EventEmitter {
       uvIndex: null,
       visibility: null,
       pressure: null,
-      minuteSummary: null
+      hourSummary: null,
+      dailySummary: null
     };
   }
 
   getWeatherForLatLon(lat, lon) {
-    // const [lat, lon] = this.props.latlon;
     if (!lat || !lon) return console.error('Latitude or longitude is undefined!');
-    // const weatherData = filterBasicCurrentWeatherData(getWeatherData(lat, lon).currently);
     return getBasicCurrentWeatherData(lat, lon)
       .then(res => {
         if (typeof this.weather !== typeof res || getObjSize(res) !== getObjSize(this.weather)) throw new Error('Objects incompatible.');

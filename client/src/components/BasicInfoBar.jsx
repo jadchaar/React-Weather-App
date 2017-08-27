@@ -1,7 +1,6 @@
 import React, {
   Component
 } from 'react';
-// import PropTypes from 'prop-types';
 import WeatherStore from '../stores/WeatherStore';
 import {
   Row,
@@ -13,12 +12,20 @@ class BasicInfoBar extends Component {
     super(props);
 
     this.state = WeatherStore.getWeather();
+
+    this.getWeatherFromStore = this.getWeatherFromStore.bind(this);
   }
 
   componentWillMount() {
-    WeatherStore.on('change', () => {
-      this.setState(WeatherStore.getWeather());
-    });
+    WeatherStore.on('change', this.getWeatherFromStore);
+  }
+
+  componentWillUnmount() {
+    WeatherStore.removeListener('change', this.getWeatherFromStore);
+  }
+
+  getWeatherFromStore() {
+    this.setState(WeatherStore.getWeather());
   }
 
   render() {
@@ -51,25 +58,18 @@ class BasicInfoBar extends Component {
         </div>
         <Row className="section-spacer">
           <Col>
-            {/* TEMP WITH UNITS / CURRENT CONDITON */}
-            <h1 className="text-center">21°C - Clear.</h1>
-            {/* TEMP FOR NEXT HOUR? */}
-            <h4 className="text-center font-weight-normal">Clear for the hour.</h4>
+            <h1 className="text-center">{Math.round(this.state.temperature)}°F - {this.state.summary}</h1>
+            <h4 className="text-center font-weight-normal">{this.state.hourSummary}</h4>
           </Col>
         </Row>
         <Row className="section-spacer">
           <Col>
-            {/* WEATHER SUMMARY FOR NEXT FEW DAYS */}
-            <h6 className="text-center font-weight-normal">Light rain on Monday through next Friday, with temperatures bottoming out at 22°C on Tuesday.</h6>
+            <h6 className="text-center font-weight-normal">{this.state.dailySummary}</h6>
           </Col>
         </Row>
       </div>
     );
   }
 }
-
-// BasicInfoBar.propTypes = {
-//   latlon: PropTypes.array.isRequired
-// };
 
 export default BasicInfoBar;

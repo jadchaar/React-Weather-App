@@ -2,18 +2,28 @@ import React, {
   Component
 } from 'react';
 import Nav from 'components/Nav';
-import Basic from 'components/BasicInfoBar';
 import Search from 'components/Search';
+import Basic from 'components/BasicInfoBar';
+import PreSearch from 'components/PreSearch';
 import Footer from 'components/Footer';
 import {
   Container,
   Row,
   Col
 } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
+
+// Climate icons: http://adamwhitcroft.com/climacons/
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      searchSubmitted: false
+    };
+
+    this.toggleSubmissionStatus = this.toggleSubmissionStatus.bind(this);
 
     // this.state = {
     //   lat: '',
@@ -31,18 +41,32 @@ class App extends Component {
   //   });
   // }
 
+  toggleSubmissionStatus() {
+    this.setState({
+      searchSubmitted: true
+    });
+  }
+
   render() {
+    const noSubmissionMsg = (
+      <div>
+        <Container>
+          <Row>
+            <Col className="text-center">
+              <PreSearch />
+              <FontAwesome name='hand-o-up' />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
     return (
       <div>
         <Container>
           <Nav />
-          <Row>
-            <Col>
-              {/*<Search onLatLon={this.handleLatLon} />*/}
-              <Search />
-            </Col>
-          </Row>
-          <Basic />
+          {/*<Search onLatLon={this.handleLatLon} />*/}
+          <Search onSubmissionSuccess={this.toggleSubmissionStatus}/>
+          {this.state.searchSubmitted ? <Basic /> : noSubmissionMsg}
           <Footer />
         </Container>
       </div>
