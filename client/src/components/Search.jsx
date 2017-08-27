@@ -10,11 +10,12 @@ import {
   FormGroup
 } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   checkResponseStatus,
   generateQueryString
 } from '../utils/helpers';
+import * as WeatherActions from '../actions/WeatherActions';
 
 class Search extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Search extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getWeather = this.getWeather.bind(this);
   }
 
   searchLocation(query) {
@@ -42,6 +44,10 @@ class Search extends Component {
     });
   }
 
+  getWeather(lat, lon) {
+    WeatherActions.getWeatherForLocation(lat, lon);
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const locationSearch = this.state.value;
@@ -52,7 +58,8 @@ class Search extends Component {
       location: locationSearch
     });
     this.searchLocation(qs)
-      .then(res => this.props.onLatLon(res.lat, res.lon))
+      // .then(res => this.props.onLatLon(res.lat, res.lon))
+      .then(res => this.getWeather(res.lat, res.lon))
       .catch(err => console.error(`An error has occured. ${err.message}`));
   }
 
@@ -74,8 +81,8 @@ class Search extends Component {
   }
 }
 
-Search.propTypes = {
-  onLatLon: PropTypes.func.isRequired
-};
+// Search.propTypes = {
+//   onLatLon: PropTypes.func.isRequired
+// };
 
 export default Search;

@@ -2,8 +2,10 @@ import {
   EventEmitter
 } from 'events';
 import {
-  getBasicCurrentWeatherData
+  getBasicCurrentWeatherData,
+  getObjSize
 } from '../utils/helpers';
+import dispatcher from '../dispatcher';
 
 // React Flux Tutorial: https://youtu.be/MZfCVq5iCBw
 
@@ -11,13 +13,27 @@ class WeatherStore extends EventEmitter {
   constructor(props) {
     super(props);
 
+    // this.weather = {
+    //   'windSpeed': null,
+    //   'humidity': null,
+    //   'dewPoint': null,
+    //   'uvIndex': null,
+    //   'visibility': null,
+    //   'pressure': null
+    // };
+
     this.weather = {
-      'windSpeed': null,
-      'humidity': null,
-      'dewPoint': null,
-      'uvIndex': null,
-      'visibility': null,
-      'pressure': null
+      summary: null,
+      icon: null,
+      temperature: null,
+      apparentTemperature: null,
+      windSpeed: null,
+      humidity: null,
+      dewPoint: null,
+      uvIndex: null,
+      visibility: null,
+      pressure: null,
+      minuteSummary: null
     };
   }
 
@@ -27,12 +43,8 @@ class WeatherStore extends EventEmitter {
     // const weatherData = filterBasicCurrentWeatherData(getWeatherData(lat, lon).currently);
     return getBasicCurrentWeatherData(lat, lon)
       .then(res => {
-        if (!res) throw new Error('Response was undefined.');
-        const parsedRes = JSON.parse(res);
-        if(typeof this.weather !== typeof parsedRes) throw new Error('Objects incompatible.');
-        this.weather = parsedRes;
-        console.log(this.weather);
-        console.log(this.weather);
+        if (typeof this.weather !== typeof res || getObjSize(res) !== getObjSize(this.weather)) throw new Error('Objects incompatible.');
+        this.weather = res;
         this.emit('change');
       })
       .catch(err => console.error(`There has been a problem obtaining basic weather info: ${err.message}`));
@@ -41,8 +53,29 @@ class WeatherStore extends EventEmitter {
   getWeather() {
     return this.weather;
   }
+
+  handleAction(action) {
+    const {
+      type,
+      lat,
+      lon
+    } = action;
+
+    switch (type) {
+      case 'GET_WEATHER_FOR_LAT_LON':
+        this.getWeatherForLatLon(lat, lon);
+        break;
+      case 'REFRESH_WEATHER_FOR_LAT_LON':
+
+        break;
+      default:
+        console.log(`Action type ${type} is invalid.`);
+    }
+  }
 }
 
 const weatherStore = new WeatherStore();
-// window.weatherStore = weatherStore; // Just for testing
+dispatcher.register(weatherStore.handleAction.bind(weatherStore));
+// window.dispatcher = dispatcher; // NOTE: For testing
+// window.weatherStore = weatherStore; // NOTE: For testing
 export default weatherStore;

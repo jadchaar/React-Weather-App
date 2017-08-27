@@ -6,10 +6,14 @@ import {
 } from 'reactstrap';
 
 const NavBar = () => {
+  const logoStyles  = {
+    width: '250px'
+  };
+
   return (
     <div>
         <Navbar color="faded" light className="flex-center">
-          <NavbarBrand href="/"><img src={ logo } className="nav-logo" alt=""/></NavbarBrand>
+          <NavbarBrand href="/"><img src={ logo } style={logoStyles} alt=""/></NavbarBrand>
         </Navbar>
       </div>
   );

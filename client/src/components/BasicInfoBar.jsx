@@ -1,11 +1,7 @@
 import React, {
   Component
 } from 'react';
-import PropTypes from 'prop-types';
-// import {
-//   getWeatherData,
-//   filterBasicCurrentWeatherData
-// } from '../utils/helpers';
+// import PropTypes from 'prop-types';
 import WeatherStore from '../stores/WeatherStore';
 import {
   Row,
@@ -17,18 +13,7 @@ class BasicInfoBar extends Component {
     super(props);
 
     this.state = WeatherStore.getWeather();
-
-    // this.populateWeatherData = this.populateWeatherData.bind(this);
   }
-
-  // TODO: Trigger this function elegantly on search submission success?
-  // populateWeatherData() {
-  //   const [lat, lon] = this.props.latlon;
-  //   if (!lat || !lon) return console.error('Latitude or longitude is undefined!');
-  //   const weatherData = filterBasicCurrentWeatherData(getWeatherData(lat, lon).currently);
-  //   console.log(weatherData);
-  //   this.setState(weatherData);
-  // }
 
   componentWillMount() {
     WeatherStore.on('change', () => {
@@ -38,27 +23,44 @@ class BasicInfoBar extends Component {
 
   render() {
     return (
-      <div className="basic-info-bar">
-        <Row>
+      <div>
+        <div className="section-spacer">
+          {/* TODO: ADD UNITS */}
+          <Row>
+            <Col>
+              <p><strong>Wind:</strong> {this.state.windSpeed}</p>
+            </Col>
+            <Col>
+              <p><strong>Humidity:</strong> {this.state.humidity}</p>
+            </Col>
+            <Col>
+              <p><strong>Dew Pt:</strong> {this.state.dewPoint}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p><strong>UV Index:</strong> {this.state.uvIndex}</p>
+            </Col>
+            <Col>
+              <p><strong>Visibility:</strong> {this.state.visibility}</p>
+            </Col>
+            <Col>
+              <p><strong>Pressure:</strong> {this.state.pressure}</p>
+            </Col>
+          </Row>
+        </div>
+        <Row className="section-spacer">
           <Col>
-            <p><strong>Wind:</strong> {this.state.windSpeed}</p>
-          </Col>
-          <Col>
-            <p><strong>Humidity:</strong> {this.state.humidity}</p>
-          </Col>
-          <Col>
-            <p><strong>Dew Pt:</strong> {this.state.dewPoint}</p>
+            {/* TEMP WITH UNITS / CURRENT CONDITON */}
+            <h1 className="text-center">21°C - Clear.</h1>
+            {/* TEMP FOR NEXT HOUR? */}
+            <h4 className="text-center font-weight-normal">Clear for the hour.</h4>
           </Col>
         </Row>
-        <Row>
+        <Row className="section-spacer">
           <Col>
-            <p><strong>UV Index:</strong> {this.state.uvIndex}</p>
-          </Col>
-          <Col>
-            <p><strong>Visibility:</strong> {this.state.visibility}</p>
-          </Col>
-          <Col>
-            <p><strong>Pressure:</strong> {this.state.pressure}</p>
+            {/* WEATHER SUMMARY FOR NEXT FEW DAYS */}
+            <h6 className="text-center font-weight-normal">Light rain on Monday through next Friday, with temperatures bottoming out at 22°C on Tuesday.</h6>
           </Col>
         </Row>
       </div>
@@ -66,8 +68,8 @@ class BasicInfoBar extends Component {
   }
 }
 
-BasicInfoBar.propTypes = {
-  latlon: PropTypes.array.isRequired
-};
+// BasicInfoBar.propTypes = {
+//   latlon: PropTypes.array.isRequired
+// };
 
 export default BasicInfoBar;

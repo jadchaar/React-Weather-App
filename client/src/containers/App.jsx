@@ -15,38 +15,34 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      lat: '',
-      lon: ''
-    };
-
-    this.handleLatLon = this.handleLatLon.bind(this);
+    // this.state = {
+    //   lat: '',
+    //   lon: ''
+    // };
+    //
+    // this.handleLatLon = this.handleLatLon.bind(this);
   }
 
   // Good article on sharing states between components https://goo.gl/CrudXt
-  handleLatLon(_lat, _lon) {
-    this.setState({
-      lat: _lat,
-      lon: _lon
-    });
-  }
+  // handleLatLon(_lat, _lon) {
+  //   this.setState({
+  //     lat: _lat,
+  //     lon: _lon
+  //   });
+  // }
 
   render() {
-    const {
-      lat,
-      lon
-    } = this.state;
-    const latLonArr = [lat, lon];
     return (
       <div>
         <Container>
           <Nav />
           <Row>
             <Col>
-              <Search onLatLon={this.handleLatLon} />
+              {/*<Search onLatLon={this.handleLatLon} />*/}
+              <Search />
             </Col>
           </Row>
-          <Basic latlon={latLonArr} />
+          <Basic />
           <Footer />
         </Container>
       </div>

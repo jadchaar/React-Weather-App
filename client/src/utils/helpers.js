@@ -1,5 +1,5 @@
 import querystring from 'querystring';
-import _ from 'lodash/core';
+// import _ from 'lodash/core';
 
 export const checkResponseStatus = res => {
   if (res.ok) return res.json();
@@ -27,14 +27,41 @@ export const getBasicCurrentWeatherData = (_lat, _lon) => {
       mode: 'cors'
     })
     .then(checkResponseStatus)
-    .then(res => JSON.stringify(_.pick(res.currently, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure'])))
+    // .then(res => _.pick(res.currently, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure']))
+    .then(res => filterData(res))
     .catch(err => console.error(`There has been a problem with the fetch operation: ${err.message}`));
 };
 
-// export const getBasicCurrentWeatherData = data => {
-//   return JSON.stringify(_.pick(data, ['windSpeed', 'humidity', 'dewPoint', 'uvIndex', 'visibility', 'pressure']));
-// };
+const filterData = (res) => {
+  const {
+    summary,
+    icon,
+    temperature,
+    apparentTemperature,
+    windSpeed,
+    humidity,
+    dewPoint,
+    uvIndex,
+    visibility,
+    pressure
+  } = res.currently;
+  return {
+    summary,
+    icon,
+    temperature,
+    apparentTemperature,
+    windSpeed,
+    humidity,
+    dewPoint,
+    uvIndex,
+    visibility,
+    pressure,
+    minuteSummary: res.minutely.summary
+  };
+};
 
 export const generateQueryString = obj => {
   return querystring.stringify(obj);
 };
+
+export const getObjSize = obj => Object.keys(obj).length;
