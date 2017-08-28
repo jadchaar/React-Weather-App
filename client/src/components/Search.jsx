@@ -64,7 +64,7 @@ class Search extends Component {
     this.searchLocation(qs)
       // .then(res => this.props.onLatLon(res.lat, res.lon))
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.message === 'No results') {
           throw new Error('No results');
         } else {

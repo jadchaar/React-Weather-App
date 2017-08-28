@@ -4,7 +4,7 @@ import mapValues from 'lodash/mapValues';
 export const checkResponseStatus = res => {
   // TODO: Handle No Content responses
   // if (res.ok) return res.json();
-  console.log(res);
+  // console.log(res);
   if (res.ok) {
     const contentType = res.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {

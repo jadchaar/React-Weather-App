@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run server-dev",
     "server-dev": "NODE_ENV=development nodemon server.js 3001",
-    "server-production": "NODE_ENV=production forever -m 5 server.js"
+    "server-production": "NODE_ENV=production forever -m 5 server.js 3001"
   },
   "author": "",
   "dependencies": {

@@ -30,6 +30,8 @@
     "start-api-server": "cd .. && npm start",
     "build-react": "react-scripts build",
     "build": "NODE_PATH=src npm-run-all --sequential build-css build-react",
+    "serve-build": "serve -s build",
+    "server-production": "cd .. && npm run server-production",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
