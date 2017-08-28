@@ -49,7 +49,7 @@ app.get('/api/react-weather/weather', (req, res) => {
     .catch(err => res.status(500).send(`An error has occured: ${err}`));
 });
 
-app.listen(listenPort, () => console.log(`react-weather-app server listening on port ${listenPort}!`));
+app.listen(process.env.PORT ? process.env.PORT : listenPort);
 
 // Takes a location input and returns a json of location info
 const getLatLon = location => {
