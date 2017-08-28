@@ -28,7 +28,8 @@
     "start-js": "react-scripts start",
     "start": "NODE_PATH=src npm-run-all -p watch-css start-js start-api-server",
     "start-api-server": "cd .. && cd server && npm start",
-    "build": "npm run build-css && react-scripts build",
+    "build-react": "react-scripts build",
+    "build": "NODE_PATH=src npm-run-all --sequential build-css build-react",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
