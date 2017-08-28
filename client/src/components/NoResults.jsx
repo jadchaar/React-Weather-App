@@ -4,16 +4,16 @@ import {
   Row
 } from 'reactstrap';
 
-const PreSearch = () => {
+const NoResults = () => {
   return (
     <div>
       <Row className="flex-center">
         <h4>
-          Start by searching for a location <FontAwesome name='hand-o-up' />
+          No results. Please try again. <FontAwesome name='frown-o' />
         </h4>
       </Row>
     </div>
   );
 };
 
-export default PreSearch;
+export default NoResults;

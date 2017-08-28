@@ -14,18 +14,18 @@ class WeatherStore extends EventEmitter {
     super(props);
 
     this.weather = {
-      summary: null,
-      icon: null,
-      temperature: null,
-      apparentTemperature: null,
-      windSpeed: null,
-      humidity: null,
-      dewPoint: null,
-      uvIndex: null,
-      visibility: null,
-      pressure: null,
-      hourSummary: null,
-      dailySummary: null
+      currentSummary: '',
+      hourSummary: '',
+      dailySummary: '',
+      icon: '',
+      temperature: 0,
+      apparentTemperature: 0,
+      windSpeed: 0,
+      humidity: 0,
+      dewPoint: 0,
+      uvIndex: 0,
+      visibility: 0,
+      pressure: 0,
     };
   }
 

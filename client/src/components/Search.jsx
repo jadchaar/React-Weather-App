@@ -7,7 +7,7 @@ import {
   Input,
   Button,
   Form,
-  FormGroup
+  FormGroup,
 } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
 import {
@@ -22,7 +22,7 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +35,7 @@ class Search extends Component {
         mode: 'cors'
       })
       .then(checkResponseStatus)
+      .then(res => res === 'No results' ? new Error('No results') : res)
       .catch(err => console.error(`There has been a problem with the fetch operation: ${err.message}`));
   }
 
@@ -52,6 +53,7 @@ class Search extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.props.onNoResults(false);
     const locationSearch = this.state.value;
     if (!locationSearch) {
       return; // TODO: CHANGE CLASS AND ALERT USER THAT FIELD IS BLANK
@@ -61,8 +63,23 @@ class Search extends Component {
     });
     this.searchLocation(qs)
       // .then(res => this.props.onLatLon(res.lat, res.lon))
+      .then(res => {
+        console.log(res);
+        if (res.message === 'No results') {
+          throw new Error('No results');
+        } else {
+          return res;
+        }
+      })
       .then(res => this.getWeatherDispatch(res.lat, res.lon))
-      .catch(err => console.error(`An error has occured. ${err.message}`));
+      // .catch(err => console.error(`An error has occured. ${err.message}`));
+      .catch(err => {
+        if (err.message === 'No results') {
+          this.props.onNoResults(true);
+        } else {
+          return console.error(`There has been a problem with the fetch operation: ${err.message}`);
+        }
+      });
   }
 
   render() {
@@ -88,7 +105,8 @@ class Search extends Component {
 // };
 
 Search.propTypes = {
-  onSubmissionSuccess: PropTypes.func.isRequired
+  onSubmissionSuccess: PropTypes.func.isRequired,
+  onNoResults: PropTypes.func.isRequired,
 };
 
 export default Search;
