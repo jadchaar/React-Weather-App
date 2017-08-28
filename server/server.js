@@ -9,7 +9,7 @@ const app = express();
 const fetch = require('node-fetch');
 const {
   checkResponseStatus
-} = require('./helpers');
+} = require('./serverHelpers');
 
 // Get port for server from arguments
 const listenPort = process.argv[2] ? parseInt(process.argv[2], 10) : 3001;
