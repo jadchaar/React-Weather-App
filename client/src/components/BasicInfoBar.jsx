@@ -7,7 +7,8 @@ import {
   Col
 } from 'reactstrap';
 import {
-  imperialUnits
+  imperialUnits,
+  determineIcon
 } from '../utils/helpers';
 
 class BasicInfoBar extends Component {
@@ -45,6 +46,17 @@ class BasicInfoBar extends Component {
       // timeAM,
     } = imperialUnits;
 
+    console.log(this.state.icon);
+
+    let iconToDisplay;
+    if(this.state.icon) {
+      iconToDisplay = (
+        <Row className="section-spacer flex-center">
+          <img className="climacons" src={determineIcon(this.state.icon)} alt={this.state.icon} />
+        </Row>
+      );
+    }
+
     return (
       <div>
         <div className="section-spacer">
@@ -71,6 +83,7 @@ class BasicInfoBar extends Component {
             </Col>
           </Row>
         </div>
+        {iconToDisplay}
         <Row className="section-spacer">
           <Col>
             <h1 className="text-center font-weight-bold">{this.state.temperature}{degreesF} - {this.state.currentSummary}</h1>

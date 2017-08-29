@@ -1,5 +1,18 @@
 import querystring from 'querystring';
 import mapValues from 'lodash/mapValues';
+import Sun from '../images/climacons/Sun.svg';
+import Moon from '../images/climacons/Moon.svg';
+import Rain from '../images/climacons/Cloud-Rain.svg';
+import Snow from '../images/climacons/Cloud-Snow.svg';
+import Hail from '../images/climacons/Cloud-Hail.svg';
+import Wind from '../images/climacons/Wind.svg';
+import Fog from '../images/climacons/Cloud-Fog.svg';
+import Cloud from '../images/climacons/Cloud.svg';
+import CloudSun from '../images/climacons/Cloud-Sun.svg';
+import CloudMoon from '../images/climacons/Cloud-Moon.svg';
+import Lightning from '../images/climacons/Cloud-Lightning.svg';
+import Tornado from '../images/climacons/Tornado.svg';
+import Shades from '../images/climacons/Shades.svg';
 
 export const checkResponseStatus = res => {
   // TODO: Handle No Content responses
@@ -92,4 +105,37 @@ export const imperialUnits = {
   pressure: 'mb',
   timePM: 'pm',
   timeAM: 'am'
+};
+
+export const determineIcon = (icon) => {
+  switch (icon) {
+    case 'clear-day':
+      return Sun;
+    case 'clear-night':
+      return Moon;
+    case 'rain':
+      return Rain;
+    case 'snow':
+      return Snow;
+    case 'sleet':
+      return Hail;
+    case 'wind':
+      return Wind;
+    case 'fog':
+      return Fog;
+    case 'cloudy':
+      return Cloud;
+    case 'partly-cloudy-day':
+      return CloudSun;
+    case 'partly-cloudy-night':
+      return CloudMoon;
+    case 'hail':
+      return Hail;
+    case 'thunderstorm':
+      return Lightning;
+    case 'tornado':
+      return Tornado;    
+    default:
+      return Shades;
+  }
 };

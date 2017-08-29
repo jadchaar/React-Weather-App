@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
+$main-text-color: #3e3e3e;
+
 body {
+  color: $main-text-color;
   font-family: 'Lato', sans-serif;
 }
 
@@ -12,4 +15,8 @@ body {
 
 .section-spacer {
   padding-top: 25px;
+}
+
+.climacons {
+  height: 50px;
 }
