@@ -46,7 +46,7 @@ class BasicInfoBar extends Component {
       // timeAM,
     } = imperialUnits;
 
-    console.log(this.state.icon);
+    // console.log(this.state.icon);
 
     let iconToDisplay;
     if(this.state.icon) {

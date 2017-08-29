@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run server-dev",
     "server-dev": "NODE_ENV=development nodemon server.js 3001",
-    "server-production": "NODE_ENV=production forever -m 5 server.js 3001"
+    "server-production": "NODE_ENV=production forever -m 5 server.js 3001",
+    "build-upload-heroku": "cd client && npm run build && cd .. && git add . && git commit -m \"Push new React build to Heroku\" && git push && git push heroku master && heroku open"
   },
   "author": "",
   "dependencies": {
